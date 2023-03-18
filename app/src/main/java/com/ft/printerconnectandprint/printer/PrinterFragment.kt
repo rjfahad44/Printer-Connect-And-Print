@@ -95,7 +95,7 @@ class PrinterFragment : Fragment() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.searchable_spinner_layout)
 
-        dialog.window?.setLayout(650, 800)
+        dialog.window?.setLayout(750, 800)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val listView = dialog.list_view
@@ -134,7 +134,7 @@ class PrinterFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (!Printooth.hasPairedPrinter()) {
-            scanPrinterAndConnect()
+            //scanPrinterAndConnect()
         } else {
             val printer = Printooth.getPairedPrinter()
             binding.printPrinterName.text = printer?.name

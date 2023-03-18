@@ -12,6 +12,7 @@ import java.io.IOException
 
 class SettingsDataStore(private val context: Context) {
 
+
     private val PRINTER_SIZE = stringPreferencesKey("printer_size")
     private val Context.dataStore : DataStore<Preferences> by preferencesDataStore(
         name = Constants.SET_PRINTER_SIZE
