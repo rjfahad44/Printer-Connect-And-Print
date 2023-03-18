@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.ft.printerconnectandprint.printer.PrinterFragment">
 
     <com.google.android.material.textview.MaterialTextView
@@ -114,12 +115,14 @@
             android:id="@+id/printSettingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/printLanguageCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@android:color/transparent"
                 android:layout_margin="10dp"
                 app:cardCornerRadius="5dp"
                 app:strokeColor="@color/blue"
@@ -153,6 +156,7 @@
                 android:id="@+id/printerSizeCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@android:color/transparent"
                 android:layout_margin="10dp"
                 app:cardCornerRadius="5dp"
                 app:strokeColor="@color/blue"
@@ -183,6 +187,7 @@
                         android:textSize="16sp"
                         app:drawableRightCompat="@drawable/baseline_arrow_drop_down_24"
                         app:drawableTint="@color/black" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -190,6 +195,7 @@
                 android:id="@+id/printTextSizeCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@android:color/transparent"
                 android:layout_margin="10dp"
                 app:cardCornerRadius="5dp"
                 app:strokeColor="@color/blue"

@@ -8,6 +8,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -111,7 +112,6 @@ class ScanningActivity : AppCompatActivity() {
         printers.adapter = adapter
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onStart() {
         super.onStart()
 
@@ -119,7 +119,7 @@ class ScanningActivity : AppCompatActivity() {
             bluetooth.onStart()
             if (!bluetooth.isEnabled)
                 bluetooth.enable()
-            Handler().postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 bluetooth.startScanning()
             }, 1000)
         }

@@ -25,6 +25,10 @@ fun String.logI(tag: String){
     Log.i(tag, this)
 }
 
+fun Context.prefGetFlot(key: String, value: Float): Float{
+    return 48f
+}
+
 fun Activity.checkPermission(context: Context, list: List<String>){
     Dexter.withContext(context)
         .withPermissions(list)

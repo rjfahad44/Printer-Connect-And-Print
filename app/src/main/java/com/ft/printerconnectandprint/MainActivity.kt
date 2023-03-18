@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.ActivityMainBinding
 import com.ft.printerconnectandprint.printer.PrinterFragment
+import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding

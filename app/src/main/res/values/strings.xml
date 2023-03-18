@@ -6,4 +6,6 @@
     <string name="printer_language">Printer Language</string>
     <string name="printer_size">Printer Size</string>
     <string name="printer_text_size">Printer Text Size</string>
+    <string name="select_printer_size">Select Printer Size</string>
+    <string name="search">Search...</string>
 </resources>
