@@ -92,7 +92,7 @@ class PrinterFragment : Fragment() {
     private fun SearchSpinner() {
         val printerSizeList = arrayOf("48mm", "72mm")
 
-        val dialog = Dialog(requireContext())
+        val dialog = Dialog(requireContext(), com.karumi.dexter.R.style.AlertDialog_AppCompat)
 
         dialog.window?.setLayout(750, 800)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
