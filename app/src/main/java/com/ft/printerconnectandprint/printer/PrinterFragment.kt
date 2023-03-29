@@ -93,10 +93,10 @@ class PrinterFragment : Fragment() {
         val printerSizeList = arrayOf("48mm", "72mm")
 
         val dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.searchable_spinner_layout)
 
         dialog.window?.setLayout(750, 800)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setContentView(R.layout.searchable_spinner_layout)
 
         val listView = dialog.list_view
         val editText = dialog.edit_text
