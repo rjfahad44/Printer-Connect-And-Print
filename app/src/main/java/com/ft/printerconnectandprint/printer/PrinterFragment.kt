@@ -76,7 +76,7 @@ class PrinterFragment : Fragment() {
         }
 
         binding.printerSizeCard.setOnClickListener {
-            SearchSpinner()
+            searchSpinner()
         }
 
 
@@ -89,7 +89,7 @@ class PrinterFragment : Fragment() {
         }
     }
 
-    private fun SearchSpinner() {
+    private fun searchSpinner() {
         val printerSizeList = arrayOf("48mm", "72mm")
 
         val dialog = Dialog(requireContext(), com.karumi.dexter.R.style.AlertDialog_AppCompat)
