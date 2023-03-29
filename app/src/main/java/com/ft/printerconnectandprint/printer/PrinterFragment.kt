@@ -18,6 +18,7 @@ import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.FragmentPrinterBinding
 import com.ft.printerconnectandprint.checkPermission
 import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
+import com.ft.printerconnectandprint.toast
 import com.mazenrashed.printooth.Printooth
 import com.mazenrashed.printooth.ui.ScanningActivity
 import kotlinx.android.synthetic.main.searchable_spinner_layout.*
@@ -84,7 +85,7 @@ class PrinterFragment : Fragment() {
             if (!Printooth.hasPairedPrinter()) {
                 scanPrinterAndConnect()
             } else {
-
+                "print your text".toast(requireContext())
             }
         }
     }
