@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -30,6 +31,7 @@ class PrinterFragment : Fragment() {
 
     private lateinit var binding: FragmentPrinterBinding
     private lateinit var dataStorePres: SettingsDataStore
+    private var isHide: Boolean = false
 
     private val permissionList = listOf(
         android.Manifest.permission.BLUETOOTH_SCAN,
@@ -67,7 +69,8 @@ class PrinterFragment : Fragment() {
         }
 
         binding.printerSettings.setOnClickListener {
-
+            isHide = !isHide
+            binding.printSettingLayout.isVisible = isHide
         }
 
         lifecycleScope.launch {
