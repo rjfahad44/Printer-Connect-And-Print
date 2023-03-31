@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.FragmentPrinterBinding
+import com.ft.printerconnectandprint.Constants
 import com.ft.printerconnectandprint.checkPermission
 import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
 import com.ft.printerconnectandprint.toast
@@ -77,10 +78,15 @@ class PrinterFragment : Fragment() {
             dataStorePres.printerSizeFlow.collectLatest {
                 binding.printerSize.text = it
             }
+
+            dataStorePres.printerTextSizeFlow.collectLatest {
+                binding.printTextSize.text = it.toString()
+            }
         }
 
+
         binding.printerSizeCard.setOnClickListener {
-            searchSpinner()
+            searchSpinner(Constants.PRINTER_SIZE)
         }
 
 
@@ -93,11 +99,9 @@ class PrinterFragment : Fragment() {
         }
     }
 
-    private fun searchSpinner() {
+    private fun searchSpinner(value: String) {
         val printerSizeList = arrayOf("48mm", "72mm")
-
-        val dialog = Dialog(requireContext(), com.karumi.dexter.R.style.AlertDialog_AppCompat)
-
+        val dialog = Dialog(requireContext(), com.karumi.dexter.R.style.Base_ThemeOverlay_MaterialComponents_Dialog)
         dialog.window?.setLayout(750, 800)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(R.layout.searchable_spinner_layout)

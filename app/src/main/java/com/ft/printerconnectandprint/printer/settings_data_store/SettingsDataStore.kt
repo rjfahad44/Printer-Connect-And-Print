@@ -37,6 +37,7 @@ class SettingsDataStore(private val context: Context) {
         }
         .map { preferences -> preferences[PRINTER_SIZE] ?: "48mm" }
 
+
     suspend fun savePrinterTextSize(value: Int) {
         context.dataStore.edit { preferences ->
             preferences[PRINTER_TEXT_SIZE] = value
