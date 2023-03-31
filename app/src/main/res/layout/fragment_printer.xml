@@ -88,26 +88,32 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/printPrinterChange"
-                        contentPadding="0dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#00AF91"
-                        android:padding="0dp"
+                        android:backgroundTint="@color/teal_200"
                         android:text="@string/change"
                         android:textSize="11sp"
-                        app:cornerRadius="5dp" />
+                        app:cornerRadius="100dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/teal_700"
+                        android:textAllCaps="false"/>
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/printerSettings"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_weight=".1"
                 android:padding="5dp"
-                app:srcCompat="@drawable/baseline_settings_24" />
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/teal_200"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/teal_700"
+                android:textAllCaps="false"
+                android:drawableStart="@drawable/baseline_settings_24" />
 
         </LinearLayout>
 
@@ -269,6 +275,8 @@
         android:text="Print"
         app:cornerRadius="100dp"
         android:textAllCaps="false"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/teal_700"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
