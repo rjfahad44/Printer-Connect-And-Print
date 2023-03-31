@@ -24,7 +24,24 @@ class SettingsDataStore(private val context: Context) {
         }
     }
 
-    val preferenceFlow: Flow<String> = context.dataStore.data
+    val printerSizeFlow: Flow<String> = context.dataStore.data
+        .catch {
+            if (it is IOException) {
+                it.printStackTrace()
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }
+        .map { preferences -> preferences[PRINTER_SIZE] ?: "48mm" }
+
+    suspend fun savePrinterTextSize(value: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PRINTER_SIZE] = value
+        }
+    }
+
+    val printerTextSizeFlow: Flow<String> = context.dataStore.data
         .catch {
             if (it is IOException) {
                 it.printStackTrace()

@@ -74,7 +74,7 @@ class PrinterFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            dataStorePres.preferenceFlow.collectLatest {
+            dataStorePres.printerSizeFlow.collectLatest {
                 binding.printerSize.text = it
             }
         }
@@ -117,8 +117,6 @@ class PrinterFragment : Fragment() {
         }
         listView.setOnItemClickListener { parent, view, position, id ->
             lifecycleScope.launch {
-                //val size = adapter.getItem(position).toString().take(2)
-                //binding.printerSize.text = size
                 dataStorePres.savePrinterSize(adapter.getItem(position).toString())
             }
             dialog.dismiss()
