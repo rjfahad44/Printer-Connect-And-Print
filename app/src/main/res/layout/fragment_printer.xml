@@ -115,7 +115,7 @@
             android:id="@+id/printSettingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility=""
+            android:visibility="gone"
             android:background="@android:color/transparent"
             android:orientation="vertical">
 
@@ -265,10 +265,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/teal_200"
         android:text="Print"
+        app:cornerRadius="100dp"
         android:textAllCaps="false"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
