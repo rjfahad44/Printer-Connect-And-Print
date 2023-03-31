@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -79,8 +81,14 @@ fun Fragment.checkPermission(context: Context, list: List<String>){
         .check()
 }
 
-fun Fragment.changeFragment(containerId: Int, fragment : Fragment, addToBackStack : Boolean = false) {
-    val fm = requireActivity().supportFragmentManager.beginTransaction().replace(containerId, fragment)
+fun FragmentActivity.changeFragment(containerId: Int, fragment : Fragment, addToBackStack : Boolean = false) {
+    val fm = supportFragmentManager.beginTransaction().replace(containerId, fragment)
+    if (addToBackStack) fm.addToBackStack(null)
+    fm.commit()
+}
+
+fun AppCompatActivity.changeFragment(containerId: Int, fragment : Fragment, addToBackStack : Boolean = false) {
+    val fm = supportFragmentManager.beginTransaction().replace(containerId, fragment)
     if (addToBackStack) fm.addToBackStack(null)
     fm.commit()
 }

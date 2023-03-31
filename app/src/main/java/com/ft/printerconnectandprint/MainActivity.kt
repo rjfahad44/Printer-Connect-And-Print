@@ -18,9 +18,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFragment() {
-        supportFragmentManager.beginTransaction().replace(
-            R.id.fragmentContainer,
-            PrinterFragment()
-        ).commit()
+        changeFragment(R.id.fragmentContainer, PrinterFragment(), false)
     }
 }
