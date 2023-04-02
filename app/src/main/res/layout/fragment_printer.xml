@@ -93,6 +93,7 @@
                         android:backgroundTint="@color/teal_200"
                         android:text="@string/change"
                         android:textSize="11sp"
+                        android:textColor="@color/black"
                         app:cornerRadius="100dp"
                         app:strokeWidth="1dp"
                         app:strokeColor="@color/teal_700"
@@ -102,7 +103,6 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.button.MaterialButton
-                style="@style/MaterialAlertDialog.Material3.Title.Icon"
                 android:id="@+id/printerSettings"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -112,6 +112,7 @@
                 android:backgroundTint="@color/teal_200"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/teal_700"
+                app:iconTint="@color/black"
                 app:icon="@drawable/baseline_settings_24" />
 
         </LinearLayout>
@@ -249,12 +250,11 @@
         app:layout_constraintTop_toBottomOf="@+id/printerLayout">
 
         <EditText
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox.Dense"
             android:id="@+id/userText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
-            android:ems="10"
             android:gravity="start|top"
             android:hint="Type here..."
             android:inputType="textMultiLine"
@@ -276,7 +276,7 @@
         android:textAllCaps="false"
         app:strokeWidth="1dp"
         app:strokeColor="@color/teal_700"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
