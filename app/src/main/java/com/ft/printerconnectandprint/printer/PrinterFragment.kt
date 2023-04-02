@@ -24,6 +24,7 @@ import com.ft.printerconnectandprint.toast
 import com.mazenrashed.printooth.Printooth
 import com.mazenrashed.printooth.ui.ScanningActivity
 import kotlinx.android.synthetic.main.searchable_spinner_layout.*
+import kotlinx.android.synthetic.main.searchable_spinner_layout.view.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -35,11 +36,11 @@ class PrinterFragment : Fragment() {
     private var isHide: Boolean = false
 
     private val permissionList = listOf(
-        android.Manifest.permission.BLUETOOTH_SCAN,
-        android.Manifest.permission.BLUETOOTH_CONNECT,
         android.Manifest.permission.BLUETOOTH,
         android.Manifest.permission.BLUETOOTH_ADMIN,
-        android.Manifest.permission.ACCESS_FINE_LOCATION
+        android.Manifest.permission.ACCESS_FINE_LOCATION,
+        android.Manifest.permission.BLUETOOTH_SCAN,
+        android.Manifest.permission.BLUETOOTH_CONNECT,
     )
 
     private var resultLauncher =
@@ -74,6 +75,21 @@ class PrinterFragment : Fragment() {
             binding.printSettingLayout.isVisible = isHide
         }
 
+
+        val printerSizeList = arrayOf("48mm", "72mm")
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, printerSizeList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.printerSize.adapter = adapter
+        binding.printerSize.setOnItemClickListener { parent, view, position, id ->
+            lifecycleScope.launch {
+                dataStorePres.printerSizeFlow.collectLatest {
+                    lifecycleScope.launch {
+                        dataStorePres.savePrinterSize(adapter.getItem(position).toString())
+                    }
+                }
+            }
+        }
+
         lifecycleScope.launch {
             dataStorePres.printerSizeFlow.collectLatest {
                 binding.printerSize.text = it
@@ -85,9 +101,9 @@ class PrinterFragment : Fragment() {
         }
 
 
-        binding.printerSizeCard.setOnClickListener {
-            searchSpinner(Constants.PRINTER_SIZE)
-        }
+//        binding.printerSizeCard.setOnClickListener {
+//            searchSpinner(Constants.PRINTER_SIZE)
+//        }
 
 
         binding.printBtn.setOnClickListener {
@@ -99,7 +115,7 @@ class PrinterFragment : Fragment() {
         }
     }
 
-    private fun searchSpinner(value: String) {
+    /*private fun searchSpinner(value: String) {
         val printerSizeList = arrayOf("48mm", "72mm")
         val dialog = Dialog(requireContext(), com.karumi.dexter.R.style.Base_ThemeOverlay_MaterialComponents_Dialog)
         dialog.window?.setLayout(750, 800)
@@ -126,7 +142,7 @@ class PrinterFragment : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
-    }
+    }*/
 
     private fun scanPrinterAndConnect() {
         resultLauncher.launch(
