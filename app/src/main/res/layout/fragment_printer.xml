@@ -98,22 +98,22 @@
                         app:strokeWidth="1dp"
                         app:strokeColor="@color/orange"
                         android:textAllCaps="false"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/printerSettings"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        app:cornerRadius="100dp"
+                        android:backgroundTint="@color/light_orange"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/orange"
+                        app:iconTint="@color/white"
+                        app:icon="@drawable/baseline_settings_24" />
+
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/printerSettings"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".17"
-                android:layout_marginEnd="10dp"
-                app:cornerRadius="100dp"
-                android:backgroundTint="@color/light_orange"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/orange"
-                app:iconTint="@color/white"
-                app:icon="@drawable/baseline_settings_24" />
 
         </LinearLayout>
 
@@ -285,6 +285,10 @@
         app:cornerRadius="100dp"
         android:textAllCaps="false"
         app:strokeWidth="1dp"
+        android:shadowDy="10"
+        android:shadowDx="10"
+        android:translationZ="5dp"
+        android:shadowColor="@color/shadow_color"
         app:strokeColor="@color/orange"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
