@@ -108,7 +108,7 @@
                         android:backgroundTint="@color/light_orange"
                         app:strokeWidth="1dp"
                         app:strokeColor="@color/orange"
-                        app:iconTint="@color/white"
+                        app:iconTint="@color/black"
                         app:icon="@drawable/baseline_settings_24" />
 
                 </LinearLayout>
