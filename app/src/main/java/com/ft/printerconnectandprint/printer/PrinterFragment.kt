@@ -92,11 +92,11 @@ class PrinterFragment : Fragment() {
 
         lifecycleScope.launch {
             dataStorePres.printerSizeFlow.collectLatest {
-                binding.printerSize.text = it
+                binding.printerSize.prompt = it
             }
 
             dataStorePres.printerTextSizeFlow.collectLatest {
-                binding.printTextSize.text = it.toString()
+                binding.printTextSize.prompt = it.toString()
             }
         }
 
