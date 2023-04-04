@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -80,11 +81,25 @@ class PrinterFragment : Fragment() {
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, printerSizeList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.printerSize.adapter = adapter
-        binding?.printerSize?.setOnItemClickListener { parent, view, position, id ->
-            lifecycleScope.launch {
-                dataStorePres.printerSizeFlow.collectLatest {
-                    dataStorePres.savePrinterSize(adapter.getItem(position).toString())
+//        binding.printerSize.setOnItemClickListener { parent, view, position, id ->
+//            lifecycleScope.launch {
+//                dataStorePres.printerSizeFlow.collectLatest {
+//                    dataStorePres.savePrinterSize(adapter.getItem(position).toString())
+//                }
+//            }
+//        }
+
+        binding.printerSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                lifecycleScope.launch {
+                    dataStorePres.printerSizeFlow.collectLatest {
+                        dataStorePres.savePrinterSize(adapter.getItem(position).toString())
+                    }
                 }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
             }
         }
 
