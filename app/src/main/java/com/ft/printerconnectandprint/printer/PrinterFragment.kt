@@ -76,33 +76,6 @@ class PrinterFragment : Fragment() {
             binding.printSettingLayout.isVisible = isHide
         }
 
-
-        val printerSizeList = arrayOf("48mm", "72mm")
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, printerSizeList)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.printerSize.adapter = adapter
-//        binding.printerSize.setOnItemClickListener { parent, view, position, id ->
-//            lifecycleScope.launch {
-//                dataStorePres.printerSizeFlow.collectLatest {
-//                    dataStorePres.savePrinterSize(adapter.getItem(position).toString())
-//                }
-//            }
-//        }
-
-        binding.printerSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                lifecycleScope.launch {
-                    dataStorePres.printerSizeFlow.collectLatest {
-                        dataStorePres.savePrinterSize(adapter.getItem(position).toString())
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
-        }
-
         lifecycleScope.launch {
             dataStorePres.printerSizeFlow.collectLatest {
                 binding.printerSize.prompt = it
@@ -168,6 +141,8 @@ class PrinterFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        setPrinterAndTextSize()
+
         if (!Printooth.hasPairedPrinter()) {
             //scanPrinterAndConnect()
         } else {
@@ -176,5 +151,40 @@ class PrinterFragment : Fragment() {
             binding.printPrinterAddress.text = printer?.address
         }
 
+    }
+
+    private fun setPrinterAndTextSize() {
+        val printerSizeList = arrayOf("48mm", "72mm")
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, printerSizeList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.printerSize.adapter = adapter
+
+
+        binding.printerSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                lifecycleScope.launch {
+                    dataStorePres.printerSizeFlow.collectLatest {
+                        dataStorePres.savePrinterSize(adapter.getItem(position).toString())
+                    }
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        val printerTextSizeList = arrayOf(12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)
+        val printerTextSizeAdapter: ArrayAdapter<Int> = ArrayAdapter<Int>(requireContext(), android.R.layout.simple_spinner_item, printerTextSizeList)
+        printerTextSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.printTextSize.adapter = printerTextSizeAdapter
+
+        binding.printTextSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                lifecycleScope.launch {
+                    dataStorePres.printerTextSizeFlow.collectLatest {
+                        dataStorePres.savePrinterTextSize(adapter.getItem(position)?.toInt()?:12)
+                    }
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 }
