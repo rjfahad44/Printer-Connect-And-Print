@@ -81,8 +81,8 @@ fun Fragment.checkPermission(context: Context, list: List<String>){
         .check()
 }
 
-fun FragmentActivity.changeFragment(containerId: Int, fragment : Fragment, addToBackStack : Boolean = false) {
-    val fm = supportFragmentManager.beginTransaction().replace(containerId, fragment)
+fun Fragment.changeFragment(containerId: Int, fragment : Fragment, addToBackStack : Boolean = false) {
+    val fm = requireActivity().supportFragmentManager.beginTransaction().replace(containerId, fragment)
     if (addToBackStack) fm.addToBackStack(null)
     fm.commit()
 }

@@ -80,12 +80,10 @@ class PrinterFragment : Fragment() {
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, printerSizeList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.printerSize.adapter = adapter
-        binding.printerSize.setOnItemClickListener { parent, view, position, id ->
+        binding?.printerSize?.setOnItemClickListener { parent, view, position, id ->
             lifecycleScope.launch {
                 dataStorePres.printerSizeFlow.collectLatest {
-                    lifecycleScope.launch {
-                        dataStorePres.savePrinterSize(adapter.getItem(position).toString())
-                    }
+                    dataStorePres.savePrinterSize(adapter.getItem(position).toString())
                 }
             }
         }
