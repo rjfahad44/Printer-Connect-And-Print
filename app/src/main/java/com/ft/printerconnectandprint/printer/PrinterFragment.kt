@@ -87,11 +87,6 @@ class PrinterFragment : Fragment() {
         }
 
 
-//        binding.printerSizeCard.setOnClickListener {
-//            searchSpinner(Constants.PRINTER_SIZE)
-//        }
-
-
         binding.printBtn.setOnClickListener {
             if (!Printooth.hasPairedPrinter()) {
                 scanPrinterAndConnect()
@@ -100,35 +95,6 @@ class PrinterFragment : Fragment() {
             }
         }
     }
-
-    /*private fun searchSpinner(value: String) {
-        val printerSizeList = arrayOf("48mm", "72mm")
-        val dialog = Dialog(requireContext(), com.karumi.dexter.R.style.Base_ThemeOverlay_MaterialComponents_Dialog)
-        dialog.window?.setLayout(750, 800)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setContentView(R.layout.searchable_spinner_layout)
-
-        val listView = dialog.list_view
-        val editText = dialog.edit_text
-
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            printerSizeList
-        )
-
-        listView.adapter = adapter
-        editText.doOnTextChanged { text, start, before, count ->
-            adapter.filter.filter(text ?: "")
-        }
-        listView.setOnItemClickListener { parent, view, position, id ->
-            lifecycleScope.launch {
-                dataStorePres.savePrinterSize(adapter.getItem(position).toString())
-            }
-            dialog.dismiss()
-        }
-        dialog.show()
-    }*/
 
     private fun scanPrinterAndConnect() {
         resultLauncher.launch(
