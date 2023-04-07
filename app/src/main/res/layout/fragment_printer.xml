@@ -232,17 +232,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
-                    <!--<TextView
-                        android:id="@+id/printTextSize"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="5dp"
-                        android:text="16"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:drawableRightCompat="@drawable/baseline_arrow_drop_down_24"
-                        app:drawableTint="@color/black" />-->
-
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
