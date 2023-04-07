@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="change">Change</string>
-    <string name="printer_language">Printer Language</string>
+    <string name="printer_language">Printer Language: </string>
     <string name="printer_size">Printer Size</string>
     <string name="printer_text_size">Printer Text Size</string>
     <string name="select_printer_size">Select Printer Size</string>
