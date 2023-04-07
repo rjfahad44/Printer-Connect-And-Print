@@ -20,6 +20,7 @@ import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.FragmentPrinterBinding
 import com.ft.printerconnectandprint.Constants
 import com.ft.printerconnectandprint.checkPermission
+import com.ft.printerconnectandprint.logE
 import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
 import com.ft.printerconnectandprint.toast
 import com.mazenrashed.printooth.Printooth
@@ -130,7 +131,7 @@ class PrinterFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 lifecycleScope.launch {
                     dataStorePres.printerSizeFlow.collectLatest {
-                        dataStorePres.savePrinterSize(adapter.getItem(position).toString())
+                        dataStorePres.savePrinterSize(printerSizeList[position])
                     }
                 }
             }
@@ -146,7 +147,7 @@ class PrinterFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 lifecycleScope.launch {
                     dataStorePres.printerTextSizeFlow.collectLatest {
-                        dataStorePres.savePrinterTextSize(adapter.getItem(position)?.toInt()?:12)
+                        dataStorePres.savePrinterTextSize(printerTextSizeList[position])
                     }
                 }
             }

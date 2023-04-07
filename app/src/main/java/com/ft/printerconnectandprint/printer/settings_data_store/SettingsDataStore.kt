@@ -7,6 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.ft.printerconnectandprint.Constants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
@@ -35,7 +36,7 @@ class SettingsDataStore(private val context: Context) {
                 throw it
             }
         }
-        .map { preferences -> preferences[PRINTER_SIZE] ?: "48mm" }
+        .map { preferences -> preferences[PRINTER_SIZE] ?: "48mm" }.distinctUntilChanged()
 
 
     suspend fun savePrinterTextSize(value: Int) {
@@ -53,5 +54,5 @@ class SettingsDataStore(private val context: Context) {
                 throw it
             }
         }
-        .map { preferences -> preferences[PRINTER_TEXT_SIZE] ?: 12 }
+        .map { preferences -> preferences[PRINTER_TEXT_SIZE] ?: 12 }.distinctUntilChanged()
 }
