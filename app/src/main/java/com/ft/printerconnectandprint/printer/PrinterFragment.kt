@@ -80,9 +80,11 @@ class PrinterFragment : Fragment() {
         lifecycleScope.launch {
             dataStorePres.printerSizeFlow.collectLatest {
                 binding.printerSize.prompt = it
+                "${it}".logE("LOG_E")
             }
 
             dataStorePres.printerTextSizeFlow.collectLatest {
+                "${it}".logE("LOG_E")
                 binding.printTextSize.prompt = it.toString()
             }
         }

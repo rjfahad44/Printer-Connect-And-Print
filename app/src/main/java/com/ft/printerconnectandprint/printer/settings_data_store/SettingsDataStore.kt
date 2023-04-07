@@ -36,7 +36,7 @@ class SettingsDataStore(private val context: Context) {
                 throw it
             }
         }
-        .map { preferences -> preferences[PRINTER_SIZE] ?: "48mm" }.distinctUntilChanged()
+        .map { preferences -> preferences[PRINTER_SIZE] ?: "48mm" }
 
 
     suspend fun savePrinterTextSize(value: Int) {
@@ -54,5 +54,5 @@ class SettingsDataStore(private val context: Context) {
                 throw it
             }
         }
-        .map { preferences -> preferences[PRINTER_TEXT_SIZE] ?: 12 }.distinctUntilChanged()
+        .map { preferences -> preferences[PRINTER_TEXT_SIZE] ?: 12 }
 }
