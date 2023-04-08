@@ -85,7 +85,7 @@ class PrinterFragment : Fragment() {
 
             dataStorePres.printerTextSizeFlow.collectLatest {
                 "${it}".logE("LOG_E")
-                binding.printTextSize.prompt = it.toString()
+                binding.printTextSize.prompt = "${it}"
             }
         }
 
