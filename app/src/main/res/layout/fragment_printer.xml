@@ -184,22 +184,28 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight="1"
                             android:text="@string/printer_size"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:textSize="14sp" />
 
-                        <Spinner
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:id="@+id/printerSize"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:hint="Select Printer Size"
+                            style="@style/Widget.AppCompat.ListView.DropDown"
+                            />
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -219,12 +225,12 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight="1"
                             android:text="@string/printer_text_size"
                             android:textColor="@color/black"
@@ -232,10 +238,16 @@
                             android:textSize="14sp" />
 
 
-                        <Spinner
-                            android:id="@+id/printTextSize"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/printerTextSize"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:hint="Select Printer Text Size"
+                            style="@style/Widget.AppCompat.ListView.DropDown"
+                            />
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -274,6 +286,7 @@
             android:gravity="center_horizontal|top"
             android:hint="Type here..."
             android:inputType="textMultiLine"
+            android:imeOptions="actionGo"
             android:textColor="@color/black"
             android:textColorHint="@color/black60"
             android:textSize="16sp" />

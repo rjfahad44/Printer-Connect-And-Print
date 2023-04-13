@@ -1,17 +1,24 @@
 package com.ft.printerconnectandprint.printer
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.FragmentPrinterBinding
 import com.ft.printerconnectandprint.logE
 import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
@@ -80,13 +87,13 @@ class PrinterFragment : Fragment() {
 
         lifecycleScope.launch {
             dataStorePres.printerSizeFlow.collectLatest {
-                binding.printerSize.prompt = it
+                binding.printerSize.text = it
                 "${it}".logE("LOG_E")
             }
 
             dataStorePres.printerTextSizeFlow.collectLatest {
                 "${it}".logE("LOG_E")
-                binding.printTextSize.prompt = "${it}"
+                //binding.printTextSize.prompt = "${it}"
             }
         }
 
@@ -124,58 +131,22 @@ class PrinterFragment : Fragment() {
     }
 
     private fun setPrinterAndTextSize() {
-        val printerSizeList = arrayOf("48mm", "72mm")
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            printerSizeList
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.printerSize.adapter = adapter
-
-
-        binding.printerSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                lifecycleScope.launch {
-                    dataStorePres.printerSizeFlow.collectLatest {
-                        dataStorePres.savePrinterSize(printerSizeList[position])
-                    }
-                }
+        binding.printerSize.setOnClickListener {
+            val dialog = Dialog(requireContext())
+            dialog.setContentView(R.layout.searchable_spinner_layout)
+            dialog.window?.setLayout(650, 800)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+            val editText: EditText = dialog.findViewById(R.id.editText)
+            val listView: ListView = dialog.findViewById(R.id.listView)
+            val printerSizeLise = arrayListOf("48mm","72mm" )
+            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, printerSizeLise)
+            listView.adapter = adapter
+            editText.addTextChangedListener { adapter.filter.filter(it) }
+            listView.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+                binding.printerSize.setText(adapter.getItem(position))
+                dialog.dismiss()
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
-
-        val printerTextSizeList =
-            arrayOf(12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
-        val printerTextSizeAdapter: ArrayAdapter<Int> = ArrayAdapter<Int>(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            printerTextSizeList
-        )
-        printerTextSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.printTextSize.adapter = printerTextSizeAdapter
-
-        binding.printTextSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                lifecycleScope.launch {
-                    dataStorePres.printerTextSizeFlow.collectLatest {
-                        dataStorePres.savePrinterTextSize(printerTextSizeList[position])
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 }
