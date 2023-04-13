@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:textColor="@color/text_black"
+        android:layout_marginHorizontal="10dp"
         android:textSize="18sp" />
 
     <TextView
@@ -17,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
         android:layout_centerVertical="true" />
 
     <ImageView

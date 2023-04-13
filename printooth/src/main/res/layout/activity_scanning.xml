@@ -8,19 +8,22 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/light_gray"
+        android:background="@color/background"
         android:theme="?actionBarPopupTheme"
-        app:title="Scanning.." />
+        app:title="Scanning.."
+        app:titleTextColor="@color/text_black"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:layout_below="@id/toolbar">
 
         <ListView
             android:id="@+id/printers"
             android:layout_width="wrap_content"
+            android:background="@color/background"
             android:layout_height="match_parent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
