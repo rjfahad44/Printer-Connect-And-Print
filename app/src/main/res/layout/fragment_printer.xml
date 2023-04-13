@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_ash"
-    tools:context="com.ft.printerconnectandprint.printer.PrinterFragment">
+    android:background="@color/light_ash">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/titleTv"
@@ -14,7 +13,7 @@
         android:text="@string/print_your_text"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -272,10 +271,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="start|top"
+            android:gravity="center_horizontal|top"
             android:hint="Type here..."
             android:inputType="textMultiLine"
             android:textColor="@color/black"
+            android:textColorHint="@color/black60"
             android:textSize="16sp" />
 
         </com.google.android.material.card.MaterialCardView>
