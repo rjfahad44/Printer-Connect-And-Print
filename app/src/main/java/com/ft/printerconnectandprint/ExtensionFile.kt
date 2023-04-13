@@ -1,18 +1,10 @@
 package com.ft.printerconnectandprint
 
-import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-
 fun String.toast(context: Context){
     Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
 }
