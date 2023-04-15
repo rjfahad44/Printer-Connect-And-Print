@@ -27,15 +27,18 @@ import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataSto
 import com.ft.printerconnectandprint.toast
 import com.mazenrashed.printooth.Printooth
 import com.mazenrashed.printooth.ui.ScanningActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class PrinterFragment : Fragment() {
 
     private lateinit var binding: FragmentPrinterBinding
     private val appViewModel by viewModels<AppViewModel>()
     private var isHide: Boolean = false
+    private var textSize: Int = 12
 
     private val permissionList = arrayOf(
         android.Manifest.permission.BLUETOOTH,
@@ -76,6 +79,9 @@ class PrinterFragment : Fragment() {
     }
 
     private fun initialize() {
+        appViewModel.getPrinterTextSize()
+        appViewModel.getPrinterSize()
+
         binding.printPrinterChange.setOnClickListener {
             scanPrinterAndConnect()
         }
@@ -88,12 +94,15 @@ class PrinterFragment : Fragment() {
         lifecycleScope.launch {
             appViewModel.printerSizeObserver.collectLatest {
                 binding.printerSize.text = it
-                "${it}".logE("LOG_E")
+                it.logE("LOG_E")
             }
+        }
 
+        lifecycleScope.launch {
             appViewModel.printerTextSizeObserver.collectLatest {
-                "${it}".logE("LOG_E")
-                binding.txtSize.text = "${it}"
+                "$it".logE("LOG_E")
+                textSize = it
+                binding.txtSize.text = "$it"
                 binding.userText.textSize = it.toFloat()
             }
         }
@@ -119,10 +128,6 @@ class PrinterFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        appViewModel.getPrinterSize()
-        appViewModel.getPrinterTextSize()
-
         setPrinterSize()
         setPrinterTextSize()
 
@@ -137,19 +142,53 @@ class PrinterFragment : Fragment() {
     }
 
     private fun setPrinterTextSize() {
+        var job: Job? = null
+
         binding.txtSizeMinus.setOnClickListener {
-            var textSize = binding.txtSize.text.toString().toInt()
             if (textSize > 12 ){
-                textSize--
+                textSize-=2
                 appViewModel.setPrinterTextSize(textSize)
+                "textSize = $textSize".logE("LOG_E")
             }
         }
         binding.txtSizePlus.setOnClickListener {
-            var textSize = binding.txtSize.text.toString().toInt()
-            if (textSize < 101 ){
-                textSize++
+            if (textSize < 100 ){
+                textSize+=2
                 appViewModel.setPrinterTextSize(textSize)
+                "textSize = $textSize".logE("LOG_E")
             }
+        }
+
+        binding.txtSizeMinus.setOnLongClickListener {
+            if (job == null || !job!!.isActive) {
+                job = lifecycleScope.launch {
+                    while (it.isPressed) {
+                        if (textSize > 12 ){
+                            textSize-=2
+                            appViewModel.setPrinterTextSize(textSize)
+                            "textSize = $textSize".logE("LOG_E")
+                        }
+                        delay(100)
+                    }
+                }
+            }
+            true
+        }
+
+        binding.txtSizePlus.setOnLongClickListener {
+            if (job == null || !job!!.isActive) {
+                job = lifecycleScope.launch {
+                    while (it.isPressed) {
+                        if (textSize < 100 ){
+                            textSize+=2
+                            appViewModel.setPrinterTextSize(textSize)
+                            "textSize = $textSize".logE("LOG_E")
+                        }
+                        delay(100)
+                    }
+                }
+            }
+            true
         }
     }
 

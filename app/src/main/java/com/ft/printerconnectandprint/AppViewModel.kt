@@ -4,11 +4,15 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class AppViewModel(context: Context) : ViewModel() {
+@HiltViewModel
+class AppViewModel @Inject constructor(@ApplicationContext context: Context) : ViewModel() {
     private var dataStorePres: SettingsDataStore = SettingsDataStore(context)
 
     private var _printerSizeObserver = MutableStateFlow<String>("48mm")

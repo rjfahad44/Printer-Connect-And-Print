@@ -6,7 +6,9 @@ import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.ActivityMainBinding
 import com.ft.printerconnectandprint.printer.PrinterFragment
 import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {

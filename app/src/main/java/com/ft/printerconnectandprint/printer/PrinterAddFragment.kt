@@ -9,8 +9,10 @@ import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.FragmentPrinterAddBinding
 import com.ft.printerconnectandprint.changeFragment
 import com.mazenrashed.printooth.Printooth
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class PrinterAddFragment : Fragment() {
 
     private lateinit var binding: FragmentPrinterAddBinding

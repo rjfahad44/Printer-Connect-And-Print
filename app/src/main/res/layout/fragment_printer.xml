@@ -272,7 +272,7 @@
                                 android:maxLength="3"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
-                                tools:text="10" />
+                                android:text="12" />
 
                             <ImageButton
                                 android:id="@+id/txtSizePlus"
@@ -325,7 +325,7 @@
             android:imeOptions="actionGo"
             android:textColor="@color/black"
             android:textColorHint="@color/black60"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:importantForAutofill="no" />
 
         </com.google.android.material.card.MaterialCardView>
