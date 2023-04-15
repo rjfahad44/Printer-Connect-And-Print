@@ -20,5 +20,24 @@ class AppViewModel(context: Context) : ViewModel() {
         }
     }
 
+    fun setPrinterSize(size: String) = viewModelScope.launch{
+        dataStorePres.savePrinterSize(size)
+    }
+
+    private var _printerTextSizeObserver = MutableStateFlow<Int>(12)
+    var printerTextSizeObserver: StateFlow<Int> = _printerTextSizeObserver
+
+    fun getPrinterTextSize() = viewModelScope.launch{
+        dataStorePres.printerTextSizeFlow.collectLatest {
+            _printerTextSizeObserver.value = it
+        }
+    }
+
+    fun setPrinterTextSize(size: Int) = viewModelScope.launch{
+        dataStorePres.savePrinterTextSize(size)
+    }
+
+
+
 
 }

@@ -34,7 +34,6 @@ import kotlinx.coroutines.launch
 class PrinterFragment : Fragment() {
 
     private lateinit var binding: FragmentPrinterBinding
-    private lateinit var dataStorePres: SettingsDataStore
     private val appViewModel by viewModels<AppViewModel>()
     private var isHide: Boolean = false
 
@@ -77,10 +76,6 @@ class PrinterFragment : Fragment() {
     }
 
     private fun initialize() {
-        appViewModel.getPrinterSize()
-
-        dataStorePres = SettingsDataStore(requireContext())
-
         binding.printPrinterChange.setOnClickListener {
             scanPrinterAndConnect()
         }
@@ -96,9 +91,10 @@ class PrinterFragment : Fragment() {
                 "${it}".logE("LOG_E")
             }
 
-            dataStorePres.printerTextSizeFlow.collectLatest {
+            appViewModel.printerTextSizeObserver.collectLatest {
                 "${it}".logE("LOG_E")
-                //binding.printTextSize.prompt = "${it}"
+                binding.txtSize.text = "${it}"
+                binding.userText.textSize = it.toFloat()
             }
         }
 
@@ -123,7 +119,12 @@ class PrinterFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        setPrinterAndTextSize()
+
+        appViewModel.getPrinterSize()
+        appViewModel.getPrinterTextSize()
+
+        setPrinterSize()
+        setPrinterTextSize()
 
         if (!Printooth.hasPairedPrinter()) {
             //scanPrinterAndConnect()
@@ -135,7 +136,24 @@ class PrinterFragment : Fragment() {
 
     }
 
-    private fun setPrinterAndTextSize() {
+    private fun setPrinterTextSize() {
+        binding.txtSizeMinus.setOnClickListener {
+            var textSize = binding.txtSize.text.toString().toInt()
+            if (textSize > 12 ){
+                textSize--
+                appViewModel.setPrinterTextSize(textSize)
+            }
+        }
+        binding.txtSizePlus.setOnClickListener {
+            var textSize = binding.txtSize.text.toString().toInt()
+            if (textSize < 101 ){
+                textSize++
+                appViewModel.setPrinterTextSize(textSize)
+            }
+        }
+    }
+
+    private fun setPrinterSize() {
         binding.printerSize.setOnClickListener {
             val dialog = Dialog(requireContext())
             dialog.setContentView(R.layout.searchable_spinner_layout)
@@ -149,7 +167,8 @@ class PrinterFragment : Fragment() {
             listView.adapter = adapter
             editText.addTextChangedListener { adapter.filter.filter(it) }
             listView.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-                binding.printerSize.setText(adapter.getItem(position))
+                binding.printerSize.text = adapter.getItem(position)
+                appViewModel.setPrinterSize(printerSizeLise[position])
                 dialog.dismiss()
             }
         }
