@@ -95,7 +95,7 @@ class PrinterFragment : Fragment() {
 
         lifecycleScope.launch {
             appViewModel.printerSizeObserver.collectLatest {
-                binding.printerSize.text = String.format("%.0f mm", it)
+                binding.printerSize.setText(String.format("%.0f mm", it))
                 prefs.printerSizePrefs = it
                 "${it}".logE("LOG_E")
             }
@@ -126,6 +126,8 @@ class PrinterFragment : Fragment() {
     private fun scanPrinterAndConnect() {
         if (!Printooth.hasPairedPrinter()) {
             requestPermissionLauncher.launch(permissionList)
+        }else{
+            resultLauncher.launch(Intent(requireContext(), ScanningActivity::class.java))
         }
     }
 

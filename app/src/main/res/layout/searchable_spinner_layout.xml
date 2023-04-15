@@ -21,11 +21,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
-        android:background="@android:drawable/editbox_background"
+        android:background="@drawable/white_border_bg"
         android:hint="@string/search"
         android:imeOptions="actionSearch"
         android:padding="12dp"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="@color/black"
         android:textColorHint="@color/black60" />
 

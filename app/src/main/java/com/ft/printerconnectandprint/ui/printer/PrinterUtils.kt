@@ -29,56 +29,56 @@ class PrinterUtils {
 
             if (!checkConnection()) {
                 "Please Connect Printer".toast(context)
-            }
+            }else{
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val connections = BluetoothConnections().list
+                        connections?.find { it.device.address == Printooth.getPairedPrinter()?.address }
+                            ?.let {
+                                Log.e("printer", it.device.name.toString())
 
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val connections = BluetoothConnections().list
-                    connections?.find { it.device.address == Printooth.getPairedPrinter()?.address }
-                        ?.let {
-                            Log.e("printer", it.device.name.toString())
+                                val printer = EscPosPrinter(
+                                    it,
+                                    203,
+                                    prefs.printerSizePrefs,
+                                    32
+                                )
 
-                            val printer = EscPosPrinter(
-                                it,
-                                203,
-                                prefs.printerSizePrefs,
-                                32
-                            )
-
-                            val decodedString: ByteArray = Base64.decode(
-                                getBase64String(bitmap!!),
-                                Base64.DEFAULT
-                            )
-                            val decodedByte = BitmapFactory.decodeByteArray(
-                                decodedString,
-                                0,
-                                decodedString.size
-                            )
-                            val width = decodedByte.width
-                            val height = decodedByte.height
-                            val textToPrint = StringBuilder()
-                            var y = 0
-                            while (y < height) {
-                                val _bitmap = Bitmap.createBitmap(
-                                    decodedByte,
+                                val decodedString: ByteArray = Base64.decode(
+                                    getBase64String(bitmap!!),
+                                    Base64.DEFAULT
+                                )
+                                val decodedByte = BitmapFactory.decodeByteArray(
+                                    decodedString,
                                     0,
-                                    y,
-                                    width,
-                                    if (y + 256 >= height) height - y else 256
+                                    decodedString.size
                                 )
-                                textToPrint.append(
-                                    "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
-                                        printer,
-                                        _bitmap
-                                    ) + "</img>\n"
-                                )
-                                y += 256
+                                val width = decodedByte.width
+                                val height = decodedByte.height
+                                val textToPrint = StringBuilder()
+                                var y = 0
+                                while (y < height) {
+                                    val _bitmap = Bitmap.createBitmap(
+                                        decodedByte,
+                                        0,
+                                        y,
+                                        width,
+                                        if (y + 256 >= height) height - y else 256
+                                    )
+                                    textToPrint.append(
+                                        "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
+                                            printer,
+                                            _bitmap
+                                        ) + "</img>\n"
+                                    )
+                                    y += 256
+                                }
+                                printer.printFormattedTextAndCut(textToPrint.toString())
                             }
-                            printer.printFormattedTextAndCut(textToPrint.toString())
-                        }
 
-                } catch (e: java.lang.Exception) {
-                    e.printStackTrace()
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
