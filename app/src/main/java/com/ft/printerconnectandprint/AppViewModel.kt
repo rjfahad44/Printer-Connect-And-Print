@@ -3,7 +3,7 @@ package com.ft.printerconnectandprint
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
+import com.ft.printerconnectandprint.data.data_store_pref.DataStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.*
@@ -12,33 +12,32 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class AppViewModel @Inject constructor(@ApplicationContext context: Context) : ViewModel() {
-    private var dataStorePres: SettingsDataStore = SettingsDataStore(context)
+class AppViewModel @Inject constructor(@ApplicationContext context: Context, private val dataStoreRepository: DataStoreRepository) : ViewModel() {
 
-    private var _printerSizeObserver = MutableStateFlow<String>("48mm")
-    var printerSizeObserver: StateFlow<String> = _printerSizeObserver
+    private var _printerSizeObserver = MutableStateFlow<Float>(48f)
+    var printerSizeObserver: StateFlow<Float> = _printerSizeObserver
 
     fun getPrinterSize() = viewModelScope.launch{
-        dataStorePres.printerSizeFlow.collectLatest {
+        dataStoreRepository.getPrinterSize().collectLatest {
             _printerSizeObserver.value = it
         }
     }
 
-    fun setPrinterSize(size: String) = viewModelScope.launch{
-        dataStorePres.savePrinterSize(size)
+    fun setPrinterSize(size: Float) = viewModelScope.launch{
+        dataStoreRepository.setPrinterSize(size)
     }
 
-    private var _printerTextSizeObserver = MutableStateFlow<Int>(12)
-    var printerTextSizeObserver: StateFlow<Int> = _printerTextSizeObserver
+    private var _printerTextSizeObserver = MutableStateFlow<Float>(12f)
+    var printerTextSizeObserver: StateFlow<Float> = _printerTextSizeObserver
 
     fun getPrinterTextSize() = viewModelScope.launch{
-        dataStorePres.printerTextSizeFlow.collectLatest {
+        dataStoreRepository.getPrinterTextSize().collectLatest {
             _printerTextSizeObserver.value = it
         }
     }
 
-    fun setPrinterTextSize(size: Int) = viewModelScope.launch{
-        dataStorePres.savePrinterTextSize(size)
+    fun setPrinterTextSize(size: Float) = viewModelScope.launch{
+        dataStoreRepository.setPrinterTextSize(size)
     }
 
 

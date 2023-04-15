@@ -1,8 +1,10 @@
-package com.ft.printerconnectandprint.printer
+package com.ft.printerconnectandprint.ui.printer
 
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -23,7 +25,7 @@ import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.FragmentPrinterBinding
 import com.ft.printerconnectandprint.AppViewModel
 import com.ft.printerconnectandprint.logE
-import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
+import com.ft.printerconnectandprint.prefs
 import com.ft.printerconnectandprint.toast
 import com.mazenrashed.printooth.Printooth
 import com.mazenrashed.printooth.ui.ScanningActivity
@@ -38,7 +40,7 @@ class PrinterFragment : Fragment() {
     private lateinit var binding: FragmentPrinterBinding
     private val appViewModel by viewModels<AppViewModel>()
     private var isHide: Boolean = false
-    private var textSize: Int = 12
+    private var textSize: Float = 12f
 
     private val permissionList = arrayOf(
         android.Manifest.permission.BLUETOOTH,
@@ -66,7 +68,7 @@ class PrinterFragment : Fragment() {
 
 
     private fun printDetails(result: Intent?) {
-
+        "Printer is Connected".toast(requireContext())
     }
 
     override fun onCreateView(
@@ -93,8 +95,9 @@ class PrinterFragment : Fragment() {
 
         lifecycleScope.launch {
             appViewModel.printerSizeObserver.collectLatest {
-                binding.printerSize.text = it
-                it.logE("LOG_E")
+                binding.printerSize.text = "${String.format("%.0f", it)}mm"
+                prefs.printerSizePrefs =  it
+                "${it}".logE("LOG_E")
             }
         }
 
@@ -102,8 +105,8 @@ class PrinterFragment : Fragment() {
             appViewModel.printerTextSizeObserver.collectLatest {
                 "$it".logE("LOG_E")
                 textSize = it
-                binding.txtSize.text = "$it"
-                binding.userText.textSize = it.toFloat()
+                binding.txtSize.text = String.format("%.0f", it)
+                binding.userText.textSize = it
             }
         }
 
@@ -112,18 +115,21 @@ class PrinterFragment : Fragment() {
             if (!Printooth.hasPairedPrinter()) {
                 requestPermissionLauncher.launch(permissionList)
             } else {
-                "print your text".toast(requireContext())
+                PrinterUtils.printReceipt(
+                    requireContext(),
+                    getBitmapFromView(binding.userText)
+                )
             }
         }
     }
 
     private fun scanPrinterAndConnect() {
-        resultLauncher.launch(
-            Intent(
-                requireContext(),
-                ScanningActivity::class.java
-            )
-        )
+        if (!Printooth.hasPairedPrinter()) {
+            requestPermissionLauncher.launch(permissionList)
+        } else {
+            resultLauncher.launch(Intent(requireContext(), ScanningActivity::class.java))
+        }
+
     }
 
     override fun onResume() {
@@ -131,9 +137,7 @@ class PrinterFragment : Fragment() {
         setPrinterSize()
         setPrinterTextSize()
 
-        if (!Printooth.hasPairedPrinter()) {
-            //scanPrinterAndConnect()
-        } else {
+        if (Printooth.hasPairedPrinter()) {
             val printer = Printooth.getPairedPrinter()
             binding.printPrinterName.text = printer?.name
             binding.printPrinterAddress.text = printer?.address
@@ -201,15 +205,25 @@ class PrinterFragment : Fragment() {
             dialog.show()
             val editText: EditText = dialog.findViewById(R.id.editText)
             val listView: ListView = dialog.findViewById(R.id.listView)
-            val printerSizeLise = arrayListOf("48mm","72mm" )
-            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, printerSizeLise)
+            val printerSizeLise = arrayListOf(48f,72f)
+            val adapter: ArrayAdapter<Float> = ArrayAdapter<Float>(requireContext(), android.R.layout.simple_list_item_1, printerSizeLise)
             listView.adapter = adapter
             editText.addTextChangedListener { adapter.filter.filter(it) }
             listView.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-                binding.printerSize.text = adapter.getItem(position)
+                binding.printerSize.text = "${adapter.getItem(position)}"
                 appViewModel.setPrinterSize(printerSizeLise[position])
                 dialog.dismiss()
             }
         }
+    }
+
+
+    fun getBitmapFromView(view: View): Bitmap? {
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(returnedBitmap)
+        val bgDrawable = view.background
+        if (bgDrawable != null) bgDrawable.draw(canvas) else canvas.drawColor(Color.WHITE)
+        view.draw(canvas)
+        return returnedBitmap
     }
 }

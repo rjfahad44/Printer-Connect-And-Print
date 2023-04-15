@@ -4,8 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.ActivityMainBinding
-import com.ft.printerconnectandprint.printer.PrinterFragment
-import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
+import com.ft.printerconnectandprint.ui.printer.PrinterFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

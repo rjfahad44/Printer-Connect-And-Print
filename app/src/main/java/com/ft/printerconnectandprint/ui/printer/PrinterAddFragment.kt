@@ -1,4 +1,4 @@
-package com.ft.printerconnectandprint.printer
+package com.ft.printerconnectandprint.ui.printer
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
