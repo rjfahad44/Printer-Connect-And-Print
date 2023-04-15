@@ -11,11 +11,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -33,6 +30,7 @@ import com.mazenrashed.printooth.ui.ScanningActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
+import java.util.Objects
 
 
 @AndroidEntryPoint
@@ -200,6 +198,15 @@ class PrinterFragment : Fragment() {
     }
 
     private fun setPrinterSize() {
+
+//        val printerSizeList = arrayOf(48f, 72f)
+//        val arrayAdapter = ArrayAdapter(requireActivity(), R.layout.dropdown_menu_item, printerSizeList)
+//        binding.printerSize.setAdapter(arrayAdapter)
+//        binding.printerSize.setOnItemClickListener { parent, view, position, id ->
+//            appViewModel.setPrinterSize(printerSizeList[position])
+//        }
+
+
         binding.printerSize.setOnClickListener {
             val dialog = Dialog(requireContext())
             dialog.setContentView(R.layout.searchable_spinner_layout)
@@ -215,7 +222,6 @@ class PrinterFragment : Fragment() {
             listView.adapter = adapter
             editText.addTextChangedListener { adapter.filter.filter(it) }
             listView.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-//                binding.printerSize.text = "${adapter.getItem(position)}"
                 appViewModel.setPrinterSize(printerSizeLise[position])
                 dialog.dismiss()
             }
