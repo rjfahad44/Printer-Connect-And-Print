@@ -12,6 +12,7 @@ import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnections
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg
 import com.ft.printerconnectandprint.MainActivity
 import com.ft.printerconnectandprint.prefs
+import com.ft.printerconnectandprint.toast
 import com.mazenrashed.printooth.Printooth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +28,7 @@ class PrinterUtils {
         fun printReceipt(context: Context, bitmap: Bitmap? = null) {
 
             if (!checkConnection()) {
-                context.startActivity(Intent(context, MainActivity::class.java))
+                "Please Connect Printer".toast(context)
             }
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -58,7 +59,7 @@ class PrinterUtils {
                             val textToPrint = StringBuilder()
                             var y = 0
                             while (y < height) {
-                                val bitmap = Bitmap.createBitmap(
+                                val _bitmap = Bitmap.createBitmap(
                                     decodedByte,
                                     0,
                                     y,
@@ -68,7 +69,7 @@ class PrinterUtils {
                                 textToPrint.append(
                                     "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(
                                         printer,
-                                        bitmap
+                                        _bitmap
                                     ) + "</img>\n"
                                 )
                                 y += 256

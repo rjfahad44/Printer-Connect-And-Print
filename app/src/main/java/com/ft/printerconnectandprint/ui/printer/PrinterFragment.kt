@@ -61,7 +61,7 @@ class PrinterFragment : Fragment() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted ->
             if (granted.all { it.value }) {
-                scanPrinterAndConnect()
+                resultLauncher.launch(Intent(requireContext(), ScanningActivity::class.java))
             } else {
                 "permission denied".toast(requireContext())
             }
@@ -73,8 +73,7 @@ class PrinterFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPrinterBinding.inflate(inflater)
         initialize()
@@ -97,7 +96,7 @@ class PrinterFragment : Fragment() {
         lifecycleScope.launch {
             appViewModel.printerSizeObserver.collectLatest {
                 binding.printerSize.text = String.format("%.0f mm", it)
-                prefs.printerSizePrefs =  it
+                prefs.printerSizePrefs = it
                 "${it}".logE("LOG_E")
             }
         }
@@ -118,8 +117,7 @@ class PrinterFragment : Fragment() {
             } else {
                 "Please wait....".toast(requireContext(), Toast.LENGTH_LONG)
                 PrinterUtils.printReceipt(
-                    requireContext(),
-                    getBitmapFromView(binding.userText)
+                    requireContext(), getBitmapFromView(binding.userText)
                 )
             }
         }
@@ -128,10 +126,7 @@ class PrinterFragment : Fragment() {
     private fun scanPrinterAndConnect() {
         if (!Printooth.hasPairedPrinter()) {
             requestPermissionLauncher.launch(permissionList)
-        } else {
-            resultLauncher.launch(Intent(requireContext(), ScanningActivity::class.java))
         }
-
     }
 
     override fun onResume() {
@@ -151,15 +146,15 @@ class PrinterFragment : Fragment() {
         var job: Job? = null
 
         binding.txtSizeMinus.setOnClickListener {
-            if (textSize > 12 ){
-                textSize-=2
+            if (textSize > 12) {
+                textSize -= 2
                 appViewModel.setPrinterTextSize(textSize)
                 "textSize = $textSize".logE("LOG_E")
             }
         }
         binding.txtSizePlus.setOnClickListener {
-            if (textSize < 100 ){
-                textSize+=2
+            if (textSize < 100) {
+                textSize += 2
                 appViewModel.setPrinterTextSize(textSize)
                 "textSize = $textSize".logE("LOG_E")
             }
@@ -169,8 +164,8 @@ class PrinterFragment : Fragment() {
             if (job == null || !job!!.isActive) {
                 job = lifecycleScope.launch {
                     while (it.isPressed) {
-                        if (textSize > 12 ){
-                            textSize-=2
+                        if (textSize > 12) {
+                            textSize -= 2
                             appViewModel.setPrinterTextSize(textSize)
                             "textSize = $textSize".logE("LOG_E")
                         }
@@ -185,8 +180,8 @@ class PrinterFragment : Fragment() {
             if (job == null || !job!!.isActive) {
                 job = lifecycleScope.launch {
                     while (it.isPressed) {
-                        if (textSize < 100 ){
-                            textSize+=2
+                        if (textSize < 100) {
+                            textSize += 2
                             appViewModel.setPrinterTextSize(textSize)
                             "textSize = $textSize".logE("LOG_E")
                         }
@@ -207,12 +202,14 @@ class PrinterFragment : Fragment() {
             dialog.show()
             val editText: EditText = dialog.findViewById(R.id.editText)
             val listView: ListView = dialog.findViewById(R.id.listView)
-            val printerSizeLise = arrayListOf(48f,72f)
-            val adapter: ArrayAdapter<Float> = ArrayAdapter<Float>(requireContext(), android.R.layout.simple_list_item_1, printerSizeLise)
+            val printerSizeLise = arrayListOf(48f, 72f)
+            val adapter: ArrayAdapter<Float> = ArrayAdapter<Float>(
+                requireContext(), android.R.layout.simple_list_item_1, printerSizeLise
+            )
             listView.adapter = adapter
             editText.addTextChangedListener { adapter.filter.filter(it) }
             listView.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-                binding.printerSize.text = "${adapter.getItem(position)}"
+//                binding.printerSize.text = "${adapter.getItem(position)}"
                 appViewModel.setPrinterSize(printerSizeLise[position])
                 dialog.dismiss()
             }
@@ -220,7 +217,7 @@ class PrinterFragment : Fragment() {
     }
 
 
-    fun getBitmapFromView(view: View): Bitmap? {
+    private fun getBitmapFromView(view: View): Bitmap? {
         val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(returnedBitmap)
         val bgDrawable = view.background
