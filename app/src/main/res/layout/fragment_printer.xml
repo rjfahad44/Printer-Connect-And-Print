@@ -51,15 +51,17 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:paddingVertical="10dp">
 
                     <ImageView
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        android:src="@drawable/ic_printer" />
+                        android:src="@drawable/ic_printer"
+                        android:layout_marginStart="10dp"
+                        android:contentDescription="@string/app_name" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
@@ -71,7 +73,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lines="1"
-                            android:text="Name"
+                            tools:text="Name"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:textSize="16sp" />
@@ -81,7 +83,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lines="1"
-                            android:text="Name"
+                            tools:text="Name"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -93,23 +95,28 @@
                         android:backgroundTint="@color/light_orange"
                         android:text="@string/change"
                         android:textSize="11sp"
+                        android:elevation="0dp"
                         android:textColor="@color/black"
                         app:cornerRadius="100dp"
                         app:strokeWidth="1dp"
                         app:strokeColor="@color/orange"
                         android:textAllCaps="false"/>
 
-                    <com.google.android.material.button.MaterialButton
+                    <ImageButton
                         android:id="@+id/printerSettings"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_marginStart="5dp"
-                        app:cornerRadius="100dp"
-                        android:backgroundTint="@color/light_orange"
-                        app:strokeWidth="1dp"
-                        app:strokeColor="@color/orange"
-                        app:iconTint="@color/black"
-                        app:icon="@drawable/baseline_settings_24" />
+                        android:layout_marginEnd="10dp"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/settings_btn_bg"
+                        android:contentDescription="@string/app_name"
+                        android:elevation="2dp"
+                        android:padding="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/baseline_settings_24"
+                        android:translationZ="2dp"
+                        tools:ignore="TouchTargetSizeCheck" />
 
                 </LinearLayout>
 
@@ -155,7 +162,7 @@
                         android:id="@+id/printLanguage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="English"
+                        android:text="@string/english"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -203,7 +210,7 @@
                             android:layout_weight="1"
                             android:textColor="@color/black"
                             android:textSize="14sp"
-                            android:hint="Select Printer Size"
+                            android:hint="@string/select_printer_size"
                             style="@style/Widget.AppCompat.ListView.DropDown"
                             />
 
@@ -245,7 +252,7 @@
                             android:layout_weight="1"
                             android:textColor="@color/black"
                             android:textSize="14sp"
-                            android:hint="Select Printer Text Size"
+                            android:hint="@string/select_printer_text_size"
                             style="@style/Widget.AppCompat.ListView.DropDown"
                             />
 
@@ -284,12 +291,13 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal|top"
-            android:hint="Type here..."
+            android:hint="@string/type_here"
             android:inputType="textMultiLine"
             android:imeOptions="actionGo"
             android:textColor="@color/black"
             android:textColorHint="@color/black60"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:importantForAutofill="no" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -303,7 +311,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/light_orange"
-        android:text="Print"
+        android:text="@string/print"
         app:cornerRadius="100dp"
         android:textAllCaps="false"
         app:strokeWidth="1dp"

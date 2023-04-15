@@ -9,4 +9,8 @@
     <string name="select_printer_size">Select Printer Size</string>
     <string name="search">Search...</string>
     <string name="print_your_text">Print Your Text</string>
+    <string name="print">Print</string>
+    <string name="english">English</string>
+    <string name="select_printer_text_size">Select Printer Text Size</string>
+    <string name="type_here">Type here...</string>
 </resources>

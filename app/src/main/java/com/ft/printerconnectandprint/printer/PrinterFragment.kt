@@ -17,9 +17,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.FragmentPrinterBinding
+import com.ft.printerconnectandprint.AppViewModel
 import com.ft.printerconnectandprint.logE
 import com.ft.printerconnectandprint.printer.settings_data_store.SettingsDataStore
 import com.ft.printerconnectandprint.toast
@@ -33,6 +35,7 @@ class PrinterFragment : Fragment() {
 
     private lateinit var binding: FragmentPrinterBinding
     private lateinit var dataStorePres: SettingsDataStore
+    private val appViewModel by viewModels<AppViewModel>()
     private var isHide: Boolean = false
 
     private val permissionList = arrayOf(
@@ -74,6 +77,8 @@ class PrinterFragment : Fragment() {
     }
 
     private fun initialize() {
+        appViewModel.getPrinterSize()
+
         dataStorePres = SettingsDataStore(requireContext())
 
         binding.printPrinterChange.setOnClickListener {
@@ -86,7 +91,7 @@ class PrinterFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            dataStorePres.printerSizeFlow.collectLatest {
+            appViewModel.printerSizeObserver.collectLatest {
                 binding.printerSize.text = it
                 "${it}".logE("LOG_E")
             }
