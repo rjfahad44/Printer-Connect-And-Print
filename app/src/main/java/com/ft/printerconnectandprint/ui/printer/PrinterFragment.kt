@@ -112,13 +112,17 @@ class PrinterFragment : Fragment() {
 
 
         binding.printBtn.setOnClickListener {
-            if (!Printooth.hasPairedPrinter()) {
-                requestPermissionLauncher.launch(permissionList)
-            } else {
-                "Please wait....".toast(requireContext(), Toast.LENGTH_LONG)
-                PrinterUtils.printReceipt(
-                    requireContext(), getBitmapFromView(binding.userText)
-                )
+            if (binding.userText.text.isNullOrEmpty()){
+                "Please Type Something.".toast(requireContext())
+            }else{
+                if (!Printooth.hasPairedPrinter()) {
+                    requestPermissionLauncher.launch(permissionList)
+                } else {
+                    "Please wait....".toast(requireContext(), Toast.LENGTH_LONG)
+                    PrinterUtils.printReceipt(
+                        requireContext(), getBitmapFromView(binding.userText)
+                    )
+                }
             }
         }
     }
