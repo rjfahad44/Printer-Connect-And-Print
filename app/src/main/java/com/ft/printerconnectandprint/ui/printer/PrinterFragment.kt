@@ -15,6 +15,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -95,7 +96,7 @@ class PrinterFragment : Fragment() {
 
         lifecycleScope.launch {
             appViewModel.printerSizeObserver.collectLatest {
-                binding.printerSize.text = "${String.format("%.0f", it)}mm"
+                binding.printerSize.text = String.format("%.0f mm", it)
                 prefs.printerSizePrefs =  it
                 "${it}".logE("LOG_E")
             }
@@ -115,6 +116,7 @@ class PrinterFragment : Fragment() {
             if (!Printooth.hasPairedPrinter()) {
                 requestPermissionLauncher.launch(permissionList)
             } else {
+                "Please wait....".toast(requireContext(), Toast.LENGTH_LONG)
                 PrinterUtils.printReceipt(
                     requireContext(),
                     getBitmapFromView(binding.userText)

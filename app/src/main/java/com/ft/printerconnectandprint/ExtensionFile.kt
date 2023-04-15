@@ -5,8 +5,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-fun String.toast(context: Context){
-    Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
+fun String.toast(context: Context, toastLength: Int = Toast.LENGTH_SHORT){
+    Toast.makeText(context, this, toastLength).show()
 }
 
 fun String.logD(tag: String){
