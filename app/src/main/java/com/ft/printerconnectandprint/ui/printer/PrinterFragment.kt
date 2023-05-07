@@ -116,7 +116,7 @@ class PrinterFragment : Fragment() {
                 if (!Printooth.hasPairedPrinter()) {
                     requestPermissionLauncher.launch(permissionList)
                 } else {
-                    "Please wait....".toast(requireContext(), Toast.LENGTH_LONG)
+                    "Please wait....".toast(requireContext(), Toast.LENGTH_SHORT)
                     PrinterUtils.printReceipt(
                         requireContext(), getBitmapFromView(binding.userText)
                     )
