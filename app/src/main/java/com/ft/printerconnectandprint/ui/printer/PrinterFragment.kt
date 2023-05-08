@@ -21,10 +21,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.printerconnectandprint.R
 import com.example.printerconnectandprint.databinding.FragmentPrinterBinding
-import com.ft.printerconnectandprint.AppViewModel
-import com.ft.printerconnectandprint.logE
-import com.ft.printerconnectandprint.prefs
-import com.ft.printerconnectandprint.toast
+import com.ft.printerconnectandprint.*
 import com.mazenrashed.printooth.Printooth
 import com.mazenrashed.printooth.ui.ScanningActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,6 +64,7 @@ class PrinterFragment : Fragment() {
 
 
     private fun printDetails(result: Intent?) {
+        "${result}".logD("LOG_D")
         "Printer is Connected".toast(requireContext())
     }
 
